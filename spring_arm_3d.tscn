@@ -182,7 +182,7 @@ text = "A"
 font_size = 48
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1107642015]
-transform = Transform3D(0.99738073, -0.051720742, 0.05056413, 0, 0.6990663, 0.7150569, -0.07233095, -0.71318394, 0.6972352, 1.7150753, 2.9115267, 1.6035691)
+transform = Transform3D(0.99738073, -0.051720742, 0.05056413, 0, 0.6990663, 0.7150569, -0.07233095, -0.71318394, 0.6972352, 1.7206122, 2.9145782, 1.5867331)
 script = ExtResource("1_hyqcm")
 
 [node name="CamControlHUD" type="CanvasLayer" parent="." unique_id=1527218700]
