@@ -1,0 +1,200 @@
+[gd_scene format=3 uid="uid://csrplg5predxi"]
+
+[ext_resource type="Script" uid="uid://c8hj5y8f7sb8r" path="res://free_cam.gd" id="1_hyqcm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_uqwqb"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_hyqcm"]
+sky_material = SubResource("ProceduralSkyMaterial_uqwqb")
+
+[sub_resource type="Environment" id="Environment_aamfh"]
+background_mode = 2
+sky = SubResource("Sky_hyqcm")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_uqwqb"]
+radius = 0.1
+
+[sub_resource type="Animation" id="Animation_aamfh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.164218, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tbq86"]
+resource_name = "default"
+loop_mode = 2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(2.164218, 0, 0), Vector3(0.69515014, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pg37j"]
+_data = {
+&"RESET": SubResource("Animation_aamfh"),
+&"default": SubResource("Animation_tbq86")
+}
+
+[sub_resource type="Animation" id="Animation_uqwqb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SpringArm3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hyqcm"]
+resource_name = "default"
+loop_mode = 2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../SpringArm3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5707964, 0), Vector3(0, 0.6039981, 0), Vector3(0, 2.4512408, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aamfh"]
+_data = {
+&"RESET": SubResource("Animation_uqwqb"),
+&"default": SubResource("Animation_hyqcm")
+}
+
+[node name="SpringArm3d" type="Node3D" unique_id=1512742518]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1660800705]
+environment = SubResource("Environment_aamfh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=942462236]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="BasicDemonstration" type="CSGBox3D" parent="." unique_id=1609996279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46282756, 0, -1.2733182)
+use_collision = true
+size = Vector3(0.33984375, 1, 1)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="BasicDemonstration" unique_id=4558720]
+transform = Transform3D(-4.371139e-08, 0, 0.99999994, 0, 0.99999994, 0, -1, 0, -4.3711385e-08, 0.064698935, 0, 0)
+shape = SubResource("SphereShape3D_uqwqb")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="BasicDemonstration/SpringArm3D" unique_id=200710825]
+transform = Transform3D(1, 0, 2.4868996e-14, 0, 0.99999946, 0, 0, 0, 0.99999946, 0, 0, 1.0983617)
+radius = 0.1
+
+[node name="A2" type="Label3D" parent="BasicDemonstration/SpringArm3D/CSGSphere3D" unique_id=1183688231]
+transform = Transform3D(-4.3711413e-08, 0, -1, 0, 1.0000006, 0, 1.0000006, 0, -4.3711417e-08, 0, 0, 0)
+billboard = 1
+no_depth_test = true
+text = "B"
+font_size = 48
+
+[node name="WallAgain" type="CSGBox3D" parent="BasicDemonstration" unique_id=1623934649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.164218, 0, 0)
+size = Vector3(0.09655762, 1, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BasicDemonstration/WallAgain" unique_id=374639582]
+libraries/ = SubResource("AnimationLibrary_pg37j")
+autoplay = &"default"
+
+[node name="Info" type="Label3D" parent="BasicDemonstration" unique_id=570705850]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 1.1867661, 0, 0.8503677)
+text = "SpringArm3D
+Shape: Sphere r=0.1"
+
+[node name="A" type="Label3D" parent="BasicDemonstration" unique_id=1480874451]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025140643, 0, 0)
+billboard = 1
+no_depth_test = true
+text = "A"
+font_size = 48
+
+[node name="BasicDemonstration2" type="CSGBox3D" parent="." unique_id=1012860791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.016549, 0, -1.2733182)
+use_collision = true
+size = Vector3(0.33984375, 1, 1)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="BasicDemonstration2" unique_id=1980413187]
+transform = Transform3D(-4.371139e-08, 0, 0.99999994, 0, 1, 0, -1, 0, -4.3711385e-08, 0.064698935, 0, 0)
+shape = SubResource("SphereShape3D_uqwqb")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="BasicDemonstration2/SpringArm3D" unique_id=194200561]
+transform = Transform3D(1, 0, 2.4868996e-14, 0, 0.99999946, 0, 0, 0, 0.99999946, 0, 0, 1.0983617)
+radius = 0.1
+
+[node name="A2" type="Label3D" parent="BasicDemonstration2/SpringArm3D/CSGSphere3D" unique_id=1505650037]
+transform = Transform3D(-4.3711413e-08, 0, -1, 0, 1.0000006, 0, 1.0000006, 0, -4.3711417e-08, 0, 0, 0)
+billboard = 1
+no_depth_test = true
+text = "B"
+font_size = 48
+
+[node name="WallAgain" type="CSGBox3D" parent="BasicDemonstration2" unique_id=1578937781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.69966984, 0, 0.041015625)
+size = Vector3(0.09655762, 1, 0.2578125)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BasicDemonstration2/WallAgain" unique_id=1342107934]
+libraries/ = SubResource("AnimationLibrary_aamfh")
+autoplay = &"default"
+
+[node name="Info" type="Label3D" parent="BasicDemonstration2" unique_id=1700351255]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 1.1867661, 0, 0.8503677)
+text = "SpringArm3D
+Shape: Sphere r=0.1"
+
+[node name="A" type="Label3D" parent="BasicDemonstration2" unique_id=1181154954]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025140643, 0, 0)
+billboard = 1
+no_depth_test = true
+text = "A"
+font_size = 48
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1107642015]
+transform = Transform3D(0.99738073, -0.051720742, 0.05056413, 0, 0.6990663, 0.7150569, -0.07233095, -0.71318394, 0.6972352, 1.7150753, 2.9115267, 1.6035691)
+script = ExtResource("1_hyqcm")
+
+[node name="CamControlHUD" type="CanvasLayer" parent="." unique_id=1527218700]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CamControlHUD" unique_id=1300598494]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 330.0
+grow_vertical = 2
+text = "Hold right click to control the camera
+WASD: Move
+Q/E: Down/Up
+Hold Shift: Speed Boost
+Mouse move: Camera yaw/pitch"
+scroll_active = false

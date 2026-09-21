@@ -1,0 +1,283 @@
+[gd_scene format=3 uid="uid://c616xvqq4sjet"]
+
+[ext_resource type="Script" uid="uid://c8hj5y8f7sb8r" path="res://free_cam.gd" id="1_2xfxa"]
+
+[sub_resource type="Environment" id="Environment_demo"]
+background_mode = 1
+background_color = Color(0.012, 0.016, 0.025, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.08, 0.1, 0.14, 1)
+ambient_light_energy = 0.28
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.19, 0.21, 0.24, 1)
+roughness = 0.82
+
+[sub_resource type="BoxMesh" id="Mesh_floor"]
+material = SubResource("Material_floor")
+size = Vector3(7, 0.2, 7)
+
+[sub_resource type="StandardMaterial3D" id="Material_wall"]
+albedo_color = Color(0.12, 0.135, 0.16, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_back_wall"]
+material = SubResource("Material_wall")
+size = Vector3(7, 5, 0.2)
+
+[sub_resource type="BoxMesh" id="Mesh_side_wall"]
+material = SubResource("Material_wall")
+size = Vector3(0.2, 5, 7)
+
+[sub_resource type="StandardMaterial3D" id="Material_light_white"]
+albedo_color = Color(1, 0.92, 0.72, 1)
+emission_enabled = true
+emission = Color(1, 0.82, 0.55, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="SphereMesh" id="Mesh_light_white"]
+material = SubResource("Material_light_white")
+radius = 0.18
+height = 0.36
+
+[sub_resource type="StandardMaterial3D" id="Material_light_color"]
+albedo_color = Color(1, 0.12, 0.48, 1)
+emission_enabled = true
+emission = Color(1, 0.03, 0.32, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="SphereMesh" id="Mesh_light_color"]
+material = SubResource("Material_light_color")
+radius = 0.18
+height = 0.36
+
+[sub_resource type="StandardMaterial3D" id="Material_box"]
+albedo_color = Color(0.72, 0.42, 0.18, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="Mesh_box"]
+material = SubResource("Material_box")
+size = Vector3(1.15, 1.15, 1.15)
+
+[node name="OmniLight3DEx" type="Node3D" unique_id=358500675]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1890282276]
+environment = SubResource("Environment_demo")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=909948921]
+transform = Transform3D(1, 0, 0, 0, 0.95105654, 0.309017, 0, -0.309017, 0.95105654, 0, 9, 21)
+fov = 68.0
+script = ExtResource("1_2xfxa")
+
+[node name="DefaultRoom" type="Node3D" parent="." unique_id=17551545]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="DefaultRoom" unique_id=686649376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="BackWall" type="MeshInstance3D" parent="DefaultRoom" unique_id=1464810180]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.5)
+mesh = SubResource("Mesh_back_wall")
+
+[node name="LeftWall" type="MeshInstance3D" parent="DefaultRoom" unique_id=793863513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="RightWall" type="MeshInstance3D" parent="DefaultRoom" unique_id=1684104788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="Label3D" type="Label3D" parent="DefaultRoom" unique_id=417541410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -3.35)
+pixel_size = 0.018
+billboard = 1
+no_depth_test = true
+text = "DEFAULT
+"
+outline_size = 8
+
+[node name="OmniLight3D" type="OmniLight3D" parent="DefaultRoom" unique_id=398301925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.35, 0)
+light_energy = 4.0
+omni_range = 4.5
+
+[node name="LightFixture" type="MeshInstance3D" parent="DefaultRoom/OmniLight3D" unique_id=1571714161]
+mesh = SubResource("Mesh_light_white")
+
+[node name="HighAttenuationRoom" type="Node3D" parent="." unique_id=1237765204]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="HighAttenuationRoom" unique_id=384532286]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="BackWall" type="MeshInstance3D" parent="HighAttenuationRoom" unique_id=1851434697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.5)
+mesh = SubResource("Mesh_back_wall")
+
+[node name="LeftWall" type="MeshInstance3D" parent="HighAttenuationRoom" unique_id=858181874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="RightWall" type="MeshInstance3D" parent="HighAttenuationRoom" unique_id=1272649420]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="Label3D" type="Label3D" parent="HighAttenuationRoom" unique_id=1838776775]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -3.35)
+pixel_size = 0.018
+billboard = 1
+no_depth_test = true
+text = "HIGH ATTEN + COLOR
+Attenuation: 4.0"
+outline_size = 8
+
+[node name="OmniLight3D" type="OmniLight3D" parent="HighAttenuationRoom" unique_id=797375737]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.35, 0)
+light_color = Color(1, 0.06, 0.36, 1)
+light_energy = 7.0
+omni_range = 4.5
+omni_attenuation = 4.0
+
+[node name="LightFixture" type="MeshInstance3D" parent="HighAttenuationRoom/OmniLight3D" unique_id=1039435206]
+mesh = SubResource("Mesh_light_color")
+
+[node name="LowAttenuationRoom" type="Node3D" parent="." unique_id=1465039793]
+
+[node name="Floor" type="MeshInstance3D" parent="LowAttenuationRoom" unique_id=1895366287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="BackWall" type="MeshInstance3D" parent="LowAttenuationRoom" unique_id=995860963]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.5)
+mesh = SubResource("Mesh_back_wall")
+
+[node name="LeftWall" type="MeshInstance3D" parent="LowAttenuationRoom" unique_id=367178488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="RightWall" type="MeshInstance3D" parent="LowAttenuationRoom" unique_id=531492051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="Label3D" type="Label3D" parent="LowAttenuationRoom" unique_id=2015802513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -3.35)
+pixel_size = 0.018
+billboard = 1
+no_depth_test = true
+text = "LOW ATTENUATION
+Attenuation: 0.25"
+outline_size = 8
+
+[node name="OmniLight3D" type="OmniLight3D" parent="LowAttenuationRoom" unique_id=1805939454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.35, 0)
+light_energy = 4.0
+omni_range = 4.5
+omni_attenuation = 0.25
+
+[node name="LightFixture" type="MeshInstance3D" parent="LowAttenuationRoom/OmniLight3D" unique_id=123496895]
+mesh = SubResource("Mesh_light_white")
+
+[node name="NoShadowsRoom" type="Node3D" parent="." unique_id=457329263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="NoShadowsRoom" unique_id=1876045902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="BackWall" type="MeshInstance3D" parent="NoShadowsRoom" unique_id=607738530]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.5)
+mesh = SubResource("Mesh_back_wall")
+
+[node name="LeftWall" type="MeshInstance3D" parent="NoShadowsRoom" unique_id=1167020381]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="RightWall" type="MeshInstance3D" parent="NoShadowsRoom" unique_id=1034646983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="Label3D" type="Label3D" parent="NoShadowsRoom" unique_id=722462860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -3.35)
+pixel_size = 0.018
+billboard = 1
+no_depth_test = true
+text = "SHADOWS OFF
+Default light + boxes"
+outline_size = 8
+
+[node name="OmniLight3D" type="OmniLight3D" parent="NoShadowsRoom" unique_id=1532910273]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -0.4)
+light_energy = 4.0
+omni_range = 4.5
+
+[node name="LightFixture" type="MeshInstance3D" parent="NoShadowsRoom/OmniLight3D" unique_id=967414387]
+mesh = SubResource("Mesh_light_white")
+
+[node name="BoxLeft" type="MeshInstance3D" parent="NoShadowsRoom" unique_id=848108513]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0.575, 0.7)
+mesh = SubResource("Mesh_box")
+
+[node name="BoxRight" type="MeshInstance3D" parent="NoShadowsRoom" unique_id=816495732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0.575, 0.7)
+mesh = SubResource("Mesh_box")
+
+[node name="ShadowsRoom" type="Node3D" parent="." unique_id=739481576]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="ShadowsRoom" unique_id=2047082088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="BackWall" type="MeshInstance3D" parent="ShadowsRoom" unique_id=1635750492]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.5)
+mesh = SubResource("Mesh_back_wall")
+
+[node name="LeftWall" type="MeshInstance3D" parent="ShadowsRoom" unique_id=486454827]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="RightWall" type="MeshInstance3D" parent="ShadowsRoom" unique_id=228119176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, 0)
+mesh = SubResource("Mesh_side_wall")
+
+[node name="Label3D" type="Label3D" parent="ShadowsRoom" unique_id=1866218362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -3.35)
+pixel_size = 0.018
+billboard = 1
+no_depth_test = true
+text = "SHADOWS ON
+Default light + boxes"
+outline_size = 8
+
+[node name="OmniLight3D" type="OmniLight3D" parent="ShadowsRoom" unique_id=1644468023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -0.4)
+light_energy = 4.0
+shadow_enabled = true
+omni_range = 4.5
+
+[node name="LightFixture" type="MeshInstance3D" parent="ShadowsRoom/OmniLight3D" unique_id=714994254]
+mesh = SubResource("Mesh_light_white")
+
+[node name="BoxLeft" type="MeshInstance3D" parent="ShadowsRoom" unique_id=716556081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0.575, 0.7)
+mesh = SubResource("Mesh_box")
+
+[node name="BoxRight" type="MeshInstance3D" parent="ShadowsRoom" unique_id=158401242]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0.575, 0.7)
+mesh = SubResource("Mesh_box")
+
+[node name="CamControlHUD" type="CanvasLayer" parent="." unique_id=918424156]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CamControlHUD" unique_id=1295709402]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 330.0
+grow_vertical = 2
+text = "Hold right click to control the camera
+WASD: Move
+Q/E: Down/Up
+Hold Shift: Speed Boost
+Mouse move: Camera yaw/pitch"
+scroll_active = false
